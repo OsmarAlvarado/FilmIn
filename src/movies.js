@@ -27,30 +27,40 @@ console.log(howManyMovies(movies))
 
 // Iteration 3: All scores average - Get the average of all scores with 2 decimals
 
-// function scoresAverage(moviesArray) {
-//     let addScores = moviesArray.reduce((acc, score) =>
-//         (acc + score, 0) / (moviesArray.length));
-//     return addScores
-// }
-function scoresAverage(moviesArray) {
-    let addScores = moviesArray.map((score) =>
-        score['score']
-    ).reduce((acc, b) =>
-        (acc += b) / (moviesArray.length)
-    );
-    if (moviesArray.length === '') {
+function scoresAverage(movies) {
+    let addScores = movies.reduce((acc, eachMovie) => {
+        if (eachMovie.score === undefined) {
+            addScores = acc
+        } else {
+            addScores = acc + eachMovie.score
+        }
+        return addScores
+    }, 0)
+
+    if (movies.length === 0) {
         return 0
     }
 
-    return addScores
+
 }
+// function scoresAverage(movies) {
+//     let addScores = movies.map((score) =>
+//         score['score']
+//     ).reduce((acc, b) =>
+//         (acc += b) / (moviesArray.length)
+//     );
+//     if (moviesArray.length === '') {
+//         return 0
+//     }
+
+//     return addScores
+// }
 console.log(scoresAverage(movies))
 
 // // Iteration 4: Drama movies - Get the average of Drama Movies
-function dramaMoviesScore(moviesArray) {
-    let sumScore = moviesArray.reduce((acc, b) =>
-        acc.score + b.score)
-    let promGenre = moviesArray.filter(e => {
+function dramaMoviesScore(movies) {
+
+    let promGenre = movies.filter(e => {
         if (e.genre.includes('Drama')) {
             return sumScore
         }
@@ -63,25 +73,36 @@ function dramaMoviesScore(moviesArray) {
 console.log(dramaMoviesScore(movies));
 
 // // Iteration 5: Ordering by year - Order by year, ascending (in growing order)
-function orderByYear(moviesArray) {
-    let order = moviesArray.sort((a, b) =>
-        a.year - b.year)
+function orderByYear(movies) {
+
+    const moviesCopy = [...movies]
+    moviesCopy.sort((a, b) => {
+        if (a.year > b.year) {
+            return 1
+        } else if (a.year < b.year) {
+            return -1
+        } else if (a.year === b.year) {
+            return
+        }
+    })
 
 
-    return order
 }
 
 console.log(orderByYear(movies));
 
 // // Iteration 6: Alphabetic Order - Order by title and print the first 20 titles
-function orderAlphabetically(moviesArray) {
-    for (i = 0; i <= moviesArray.length[20]; i++) {
-        orderAlf = moviesArray.length.sort(20)((a, b) =>
-            a.title - b.title)
-
-        return orderAlf++
-    }
-    return orderAlf
+function orderAlphabetically(movies) {
+    //se hace una copia de array
+    let moviesCopy2 = [...movies]
+    moviesCopy2.sort((a, b) => {
+        if (a.title > b.title) {
+            return 1
+        } else {
+            return -1
+        }
+    })
+    return moviesCopy2
 }
 
 console.log(orderAlphabetically(movies));
